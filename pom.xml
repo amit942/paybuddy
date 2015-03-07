@@ -2,19 +2,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ydp</groupId>
-	<artifactId>yodontpay</artifactId>
+	<artifactId>youdontpay</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>you dont pay</name>
 
 	<properties>
-		<ydp.webapp.home>/home/priyanka/project/server/apache-tomcat-sy/webapps/ROOT/</ydp.webapp.home>
+		<ydp.webapp.home>/home/priyanka/project/server/apache-tomcat-sy/webapps/youdontpay/</ydp.webapp.home>
 		<org.springframework.version>3.2.12.RELEASE</org.springframework.version>
 		<org.springframework.security.version>3.2.5.RELEASE</org.springframework.security.version>
 	</properties>
 
 	<build>
-		<finalName>yodontpay</finalName>
+		<finalName>youdontpay</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
@@ -42,7 +42,7 @@
 								<echo message="    Copying war to tomcat server" />
 								<echo message="+---------------------------------------------------+" />
 								<copy todir="${ydp.webapp.home}" overwrite="true">
-									<fileset dir="${project.build.directory}/yodontpay">
+									<fileset dir="${project.build.directory}/youdontpay">
 										<include name="**/*" />
 									</fileset>
 								</copy>
@@ -177,6 +177,11 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.7</version>
@@ -196,6 +201,12 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>4.1.9.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 
 	</dependencies>
