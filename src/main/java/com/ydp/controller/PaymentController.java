@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author priyanka
  */
 
-@Controller("/payment")
+@Controller
+@RequestMapping("/payment")
 public class PaymentController {
 
     private static final Logger LOG = LoggerFactory.getLogger(PaymentController.class);

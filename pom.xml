@@ -8,7 +8,7 @@
 	<name>you dont pay</name>
 
 	<properties>
-		<vmaster.webapp.home>/home/priyanka/project/server/apache-tomcat-sy/webapps/ROOT/</vmaster.webapp.home>
+		<ydp.webapp.home>/home/priyanka/project/server/apache-tomcat-sy/webapps/ROOT/</ydp.webapp.home>
 		<org.springframework.version>3.2.12.RELEASE</org.springframework.version>
 		<org.springframework.security.version>3.2.5.RELEASE</org.springframework.security.version>
 	</properties>
@@ -36,13 +36,13 @@
 								<echo message="    Deleting war from tomcat server" />
 								<echo message="+---------------------------------------------------+" />
 								<delete includeEmptyDirs="true" failonerror="true">
-									<fileset dir="${vmaster.webapp.home}" />
+									<fileset dir="${ydp.webapp.home}" />
 								</delete>
 								<echo message="+---------------------------------------------------+" />
 								<echo message="    Copying war to tomcat server" />
 								<echo message="+---------------------------------------------------+" />
-								<copy todir="${vmaster.webapp.home}" overwrite="true">
-									<fileset dir="${project.build.directory}/vmaster">
+								<copy todir="${ydp.webapp.home}" overwrite="true">
+									<fileset dir="${project.build.directory}/yodontpay">
 										<include name="**/*" />
 									</fileset>
 								</copy>
@@ -190,6 +190,12 @@
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>
 			<version>1.0.2</version>
+		</dependency>
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.1.9.Final</version>
 		</dependency>
 
 	</dependencies>
