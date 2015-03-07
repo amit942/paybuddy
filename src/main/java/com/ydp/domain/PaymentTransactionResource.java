@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
  */
 
 @Entity
-@Table(name = "payment_transaction_resource")
+@Table(name = "payment_transaction_resource", catalog = "ydp")
 public class PaymentTransactionResource {
 
     private String id;
@@ -61,6 +61,7 @@ public class PaymentTransactionResource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     public String getId() {
         return id;
     }
@@ -145,8 +146,8 @@ public class PaymentTransactionResource {
         this.createdDate = createdDate;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "createdDate", length = 0)
+    //@Temporal(TemporalType.TIMESTAMP)
+    //@Column(name = "createdDate", length = 0)
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -155,8 +156,8 @@ public class PaymentTransactionResource {
         this.updatedDate = updatedDate;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updatedDate", length = 0)
+    //@Temporal(TemporalType.TIMESTAMP)
+    //@Column(name = "updatedDate", length = 0)
     public Date getUpdatedDate() {
         return updatedDate;
     }
