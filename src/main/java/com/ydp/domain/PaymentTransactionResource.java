@@ -41,6 +41,24 @@ public class PaymentTransactionResource {
     private Date   createdDate;
     private Date   updatedDate;
 
+    public PaymentTransactionResource() {
+
+    }
+
+    public PaymentTransactionResource(String txnid, Double amount, String productInfo, String firstname, String email, String payerEmailId, String payerMobileNumber,
+            String permaLink) {
+        this.txnid = txnid;
+        this.amount = amount;
+        this.productInfo = productInfo;
+        this.firstname = firstname;
+        this.email = email;
+        this.payerEmailId = payerEmailId;
+        this.payerMobileNumber = payerMobileNumber;
+        this.permaLink = permaLink;
+        this.createdDate = new Date();
+        this.updatedDate = new Date();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public String getId() {
