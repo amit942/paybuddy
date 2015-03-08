@@ -15,5 +15,7 @@ public interface IPaymentService {
 
     PaymentTransactionResource saveTransactionRequest(String messageSendType, String payerMobile, String payerEmail, String txnid, String amount, String productInfo,
             String firstName, String email);
+
+    boolean confirmTransaction(String txnid, String link);
     
 }
