@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>home page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<script>
+  console.log("entered in script");
+  console.log($("#ydp_radio_option"));
+$(document).ready(function() {
+      $("#paymentMethod input:radio").click(function() {
+           console.log("clicked");
+      });
+      //$("input:radio:first").prop("checked", true).trigger("click");
+      
+      $("#paymentMethod  #ydp_radio_option").click(function() {
+           console.log("clicked ydp");
+	   $("#ydp_info").show();	
+      });
+      
+      $("#ydp_send_message").click(function() {
+	 var input = $("ydp_input_text").html();
+	// assuming email only.
+	if(input == "") {
+		// TODO
+		$("#display_msg").html("enter valid email");
+		$("#display_msg").show();	     
+	}else {
+		//Ajax call !
+
+	var params = {
+		messageSendType : "email",
+		payerEmail : input,
+		txnid : "txnid1",
+		amount : "120",
+		productinfo : "prod 1 info",
+		firstname : "Priyanka",
+		email : "dudani.priyanka@gmail.com",
+		phone : "9958753704" 
+	};
+	
+	 $.ajax({
+		url: 'payment/msg?messageSendType=email&payerMobile=&payerEmail=dudani.priyanka@gmail.com&txnid=newtxnid&amount=1234&productInfo=product1&firstName=name&email=dudani.priyanka',
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json; charset=utf-8',
+		//data : "{messageSendType:email,payerEmail:"+input+"txnid:tnxid1,productinfo:productinfo1,amount:123,firstname:priyanka,email:dudai,phone:9958753704}",
+                //data: 'messageSendType=email&payerMobile=&payerEmail=dudani.priyanka@gmail.com&txnid=newtxnid' + '&amount=1234&productInfo=product1&firstName=name&email=dudani.priyanka',
+                success: function(data){
+			console.log("success ajax");
+                },
+                error: function(){
+                    console.log("ajax error");
+                }
+            });
+
+	}
+      });
+});
+
+</script>
+
+<title>YDP</title>
+
+
+
+</head>
+<body>
+
+	<p>Welcome to youdontpay.com</p>
+
+	<!-- This div will be used to put data from different files for differnet pages -->
+	<div id="internal-container"></div>
+	<p>Choose payment method : </p>
+	<div id="paymentMethod">
+	<div class="radio">
+	  <label><input type="radio" name="optradio">Credit card</label>
+	</div>
+	<div class="radio">
+	  <label><input type="radio" name="optradio">Debit card</label>
+	</div>
+	<div class="radio ">
+	  <label><input type="radio" id="ydp_radio_option" name="optradio">You-dont-pay</label>
+	</div>
+
+	<div id="ydp_info" style="display:none">
+		<span> Please Enter email address: </span>
+		<br>
+		<input id="ydp_input_text" type="text"></input>
+		<button id="ydp_send_message" type="submit">Send message</button>
+		<div id="display_msg" style="display:none"></div>
+	</div>
+	<br>
+	<div>------page2---------</div>
+	<br>	
+	<div>
+		<br>
+		<input id="ydp_txnid">Enter txnid</input>
+	 	<br>
+        	<input id="ydp_link">Enter perma-link</input>
+		<br>
+		<button id="ydp_payment_do">Proceed with payment</button>
+	</div>
+
+</body>
+</html>
