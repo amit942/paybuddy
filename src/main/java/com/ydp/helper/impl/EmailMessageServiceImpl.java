@@ -11,35 +11,27 @@ public class EmailMessageServiceImpl extends AbstractMessageHelperService {
     }
 
     @Override
-    public boolean sendMessage(String receipient) {
-
+    public boolean sendMessage(String receipient, String txnid, String link) {
         boolean status = false;
         try {
-            
             Message message = getEmailInstance();
-            message.setFrom(new InternetAddress("channa.aastha@gmail.com"));
+            message.setFrom(new InternetAddress("yodonotpay@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receipient));
-            message.setSubject("Testing Subject");
-            message.setText("Testing email client," + "\n\n No spam to my email, please!");
-
+            message.setSubject("Greeting from youdonotpay.com!");
+            String url = "localhost:8080/payment/do/txnid=" + txnid + "&link=" + link;
+            message.setText("Hi," + "\n\n You have been requested to complete a payment. \n\n Please enter following URL to proceed with payment : " + "\n\n " + url);
             Transport.send(message);
 
             status = true;
-
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
         return status;
     }
 
     public static void main(String[] args) {
-
         EmailMessageServiceImpl obj = new EmailMessageServiceImpl();
-        boolean s = /*obj.sendMessage("priyanka.dudani@snapdeal.com");
-                    System.out.println(s);
-                    s =*/obj.sendMessage("aastha.channa@snapdeal.com");
-
+        boolean s = obj.sendMessage("priyanka.dudani@snapdeal.com", "newtxnid", "14bf9dde2d1vdmGsXhCYS");
         System.out.println(s);
     }
 }

@@ -78,6 +78,6 @@ public abstract class AbstractMessageHelperService {
         return returnMessage;
     }
 
-    abstract public boolean sendMessage(String receipient);
+    abstract public boolean sendMessage(String receipient, String txnid, String link);
 
 }

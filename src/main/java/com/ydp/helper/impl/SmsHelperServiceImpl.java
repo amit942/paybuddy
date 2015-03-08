@@ -10,7 +10,7 @@ public class SmsHelperServiceImpl extends AbstractMessageHelperService {
     private static final Logger LOG = LoggerFactory.getLogger(SmsHelperServiceImpl.class);
 
     @Override
-    public boolean sendMessage(String mobileNo) {
+    public boolean sendMessage(String mobileNo, String txnid, String link) {
         boolean messageSent = false;
         int attempt = 0;
         while (attempt < 5 && messageSent == false) {

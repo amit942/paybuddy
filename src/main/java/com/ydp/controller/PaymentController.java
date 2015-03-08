@@ -1,5 +1,7 @@
 package com.ydp.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ydp.domain.PaymentTransactionResource;
+import com.ydp.helper.impl.EmailMessageServiceImpl;
 import com.ydp.service.IPaymentService;
 
 /**
@@ -37,17 +40,21 @@ public class PaymentController {
     @ResponseBody
     public String sendMessage(String messageSendType, String payerMobile, String payerEmail, String txnid, String amount, String productInfo, String firstName, String email) {
         LOG.info(" Transaction creation request for txnid : " + txnid);
-        PaymentTransactionResource obj = paymentService.saveTransactionRequest(messageSendType, payerMobile, payerEmail, txnid, amount, productInfo, firstName, email);
+        PaymentTransactionResource paymentResource = paymentService.saveTransactionRequest(messageSendType, payerMobile, payerEmail, txnid, amount, productInfo, firstName, email);
 
         // TODO send mail/message here
+        String payerEmailId = paymentResource.getPayerEmailId();
+        LOG.info("Sending mail to  : " + payerEmailId);
+        EmailMessageServiceImpl obj = new EmailMessageServiceImpl();
+        boolean success = obj.sendMessage(payerEmail, paymentResource.getTxnid(), paymentResource.getPermaLink());
 
-        String message = messageSendType + " has been sent. Please wait until payment is done.";
+        String message = "Email has been sent. Please wait for payment to complete.";
         return message;
     }
 
     @RequestMapping("/do")
     @ResponseBody
-    public String confirmTransaction(String txnid, String link) {
+    public String confirmTransaction(HttpServletRequest request, String txnid, String link) {
         LOG.info(" payement request for, txnid : " + txnid + " link : " + link);
         boolean success = paymentService.confirmTransaction(txnid, link);
         if (success) {

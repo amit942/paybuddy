@@ -59,7 +59,7 @@ public class PaymentServiceImpl implements IPaymentService {
             paymentObj.setPayerMobileNumber(payerMobile);
             paymentObj.setPermaLink(permaLink);
         }
-        paymentTransactionDao.save(paymentObj);
+        paymentTransactionDao.saveOrUpdate(paymentObj);
         return paymentObj;
     }
 

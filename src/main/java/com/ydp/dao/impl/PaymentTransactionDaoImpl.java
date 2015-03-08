@@ -32,6 +32,11 @@ public class PaymentTransactionDaoImpl implements IPaymentTransactionDao {
     }
 
     @Override
+    public void saveOrUpdate(PaymentTransactionResource paymentTransac) {
+        sessionFactory.getCurrentSession().saveOrUpdate(paymentTransac);
+    }
+
+    @Override
     public PaymentTransactionResource getById(String id) {
         return (PaymentTransactionResource) sessionFactory.getCurrentSession().get(PaymentTransactionResource.class, id);
     }

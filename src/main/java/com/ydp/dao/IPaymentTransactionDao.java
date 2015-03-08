@@ -17,4 +17,6 @@ public interface IPaymentTransactionDao {
     public PaymentTransactionResource getById(String id);
     
     public PaymentTransactionResource getByTxnId(String txnid);
+
+    void saveOrUpdate(PaymentTransactionResource paymentTransac);
 }
