@@ -59,15 +59,15 @@ public class PaymentServiceImpl implements IPaymentService {
             paymentObj.setPayerMobileNumber(payerMobile);
             paymentObj.setPermaLink(permaLink);
         }
-        paymentTransactionDao.save(paymentObj);
+        paymentTransactionDao.saveOrUpdate(paymentObj);
         return paymentObj;
     }
 
     @Override
-    public boolean confirmTransaction(String txnid, String link) {
+    public Map<String, String> confirmTransaction(String txnid, String link) {
         PaymentTransactionResource paymentObj = paymentTransactionDao.getByTxnId(txnid);
         if (paymentObj == null || !link.equals(paymentObj.getPermaLink())) {
-            return false;
+            return null;
         }
 
         // donotpay.com merchant key, success-url, failure-url
@@ -88,8 +88,8 @@ public class PaymentServiceImpl implements IPaymentService {
         param.put("surl", surl);
         param.put("furl", furl);
         param.put("hash", PayuUtil.calculateHash(param, salt));
-
-        return payUService.makePayment(param);
+        return param;
+        //return payUService.makePayment(param);
     }
 
     private String generatePermaLink() {

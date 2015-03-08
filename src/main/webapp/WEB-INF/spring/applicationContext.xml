@@ -48,5 +48,8 @@
 
 	<!-- enable the configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="ydpTxManager" />
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	</bean>
 
 </beans>

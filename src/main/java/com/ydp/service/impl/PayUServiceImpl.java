@@ -32,9 +32,10 @@ public class PayUServiceImpl implements IPayUService {
     private static final Logger LOG = LoggerFactory.getLogger(PayUServiceImpl.class);
 
     @Override
-    public boolean makePayment(Map<String, String> params) {
+    public String makePayment(Map<String, String> params) {
         String testServerUrl = "https://test.payu.in/_payment";
         //String testServerUrl = "https://test.payu.in/merchant/postservice";
+        StringBuilder sb = new StringBuilder();
         try {
             URL url = new URL(testServerUrl);
             Map<String, Object> postRequestParams = new LinkedHashMap<String, Object>();
@@ -71,8 +72,10 @@ public class PayUServiceImpl implements IPayUService {
 
             //TODO return response.
             Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            for (int c; (c = in.read()) >= 0; System.out.print((char) c))
-                ;
+            for (int c; (c = in.read()) >= 0;) {
+                //System.out.print((char) c);
+                sb.append((char) c);
+            }
 
         } catch (MalformedURLException e) {
             LOG.error("Error in url" + e);
@@ -81,8 +84,7 @@ public class PayUServiceImpl implements IPayUService {
             LOG.error("IO exception" + e);
             e.printStackTrace();
         }
-        // TODO
-        return false;
+        return sb.toString();
     }
 
 }

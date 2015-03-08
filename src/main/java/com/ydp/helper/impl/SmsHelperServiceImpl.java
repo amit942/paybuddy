@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import com.ydp.helper.AbstractMessageHelperService;
 
 public class SmsHelperServiceImpl extends AbstractMessageHelperService {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(SmsHelperServiceImpl.class);
 
     @Override
-    public boolean sendMessage(String mobileNo) {
+    public boolean sendMessage(String mobileNo, String txnid, String link, String amount) {
         boolean messageSent = false;
         int attempt = 0;
         while (attempt < 5 && messageSent == false) {
@@ -27,7 +27,7 @@ public class SmsHelperServiceImpl extends AbstractMessageHelperService {
 
     public static void main(String[] args) {
         SmsHelperServiceImpl obj = new SmsHelperServiceImpl();
-        obj.sendMessage("9837049100");
+        obj.sendMessage("9582392133", "txn1", "permalink1", "100");
     }
 
 }

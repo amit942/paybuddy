@@ -13,6 +13,6 @@ import java.util.Map;
  */
 public interface IPayUService {
     
-    public boolean makePayment(Map<String, String> params);
+    public String makePayment(Map<String, String> params);
 
 }

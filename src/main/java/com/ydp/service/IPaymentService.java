@@ -4,6 +4,8 @@
  */  
 package com.ydp.service;
 
+import java.util.Map;
+
 import com.ydp.domain.PaymentTransactionResource;
 
 /**
@@ -16,6 +18,6 @@ public interface IPaymentService {
     PaymentTransactionResource saveTransactionRequest(String messageSendType, String payerMobile, String payerEmail, String txnid, String amount, String productInfo,
             String firstName, String email);
 
-    boolean confirmTransaction(String txnid, String link);
+    Map<String, String> confirmTransaction(String txnid, String link);
     
 }
