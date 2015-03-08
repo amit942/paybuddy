@@ -21,7 +21,8 @@ public class SmsHelperServiceImpl extends AbstractMessageHelperService {
             }
             System.out.println("SMS sent to:" + mobileNo);
         }
-        return true;
+        LOG.info("Message sent status " + messageSent);
+        return messageSent; 
     }
 
     public static void main(String[] args) {
