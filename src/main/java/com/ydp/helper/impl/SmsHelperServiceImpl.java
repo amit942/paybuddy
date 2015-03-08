@@ -26,7 +26,7 @@ public class SmsHelperServiceImpl extends AbstractMessageHelperService {
 
     public static void main(String[] args) {
         SmsHelperServiceImpl obj = new SmsHelperServiceImpl();
-        obj.sendMessage("9582392133");
+        obj.sendMessage("9582392133", 'txn1', 'permalink1');
     }
 
 }
