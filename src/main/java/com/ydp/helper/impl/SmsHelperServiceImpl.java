@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.ydp.helper.AbstractMessageHelperService;
 
 public class SmsHelperServiceImpl extends AbstractMessageHelperService {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(SmsHelperServiceImpl.class);
 
     @Override
@@ -26,7 +26,7 @@ public class SmsHelperServiceImpl extends AbstractMessageHelperService {
 
     public static void main(String[] args) {
         SmsHelperServiceImpl obj = new SmsHelperServiceImpl();
-        obj.sendMessage("9582392133", 'txn1', 'permalink1');
+        obj.sendMessage("9582392133", "txn1", "permalink1");
     }
 
 }
