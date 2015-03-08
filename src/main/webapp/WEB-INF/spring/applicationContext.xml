@@ -26,7 +26,7 @@
 
 	<!-- define session factor for hibernate -->
 	<bean id="ydpSessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<qualifier value="ydp" />
 		<property name="dataSource">
 			<ref bean="ydpdataSource" />
@@ -42,7 +42,7 @@
 	</bean>
 
 	<bean id="ydpTxManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="ydpSessionFactory" />
 	</bean>
 

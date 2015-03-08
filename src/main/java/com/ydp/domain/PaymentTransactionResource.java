@@ -1,5 +1,6 @@
 package com.ydp.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,13 +19,13 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "payment_transaction_resource", catalog = "ydp")
-public class PaymentTransactionResource {
+public class PaymentTransactionResource implements Serializable {
 
-    private String id;
+    private int    id;
 
     private String txnid;
 
-    private Double amount;
+    private Float  amount;
 
     private String productInfo;
 
@@ -45,7 +46,7 @@ public class PaymentTransactionResource {
 
     }
 
-    public PaymentTransactionResource(String txnid, Double amount, String productInfo, String firstname, String email, String payerEmailId, String payerMobileNumber,
+    public PaymentTransactionResource(String txnid, Float amount, String productInfo, String firstname, String email, String payerEmailId, String payerMobileNumber,
             String permaLink) {
         this.txnid = txnid;
         this.amount = amount;
@@ -61,12 +62,12 @@ public class PaymentTransactionResource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    public String getId() {
+    @Column(name = "id1", unique = true, nullable = false)
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -80,11 +81,11 @@ public class PaymentTransactionResource {
     }
 
     @Column(name = "amount", nullable = false)
-    public Double getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 
@@ -147,7 +148,7 @@ public class PaymentTransactionResource {
     }
 
     //@Temporal(TemporalType.TIMESTAMP)
-    //@Column(name = "createdDate", length = 0)
+    @Column(name = "createdDate")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -157,7 +158,7 @@ public class PaymentTransactionResource {
     }
 
     //@Temporal(TemporalType.TIMESTAMP)
-    //@Column(name = "updatedDate", length = 0)
+    @Column(name = "updatedDate")
     public Date getUpdatedDate() {
         return updatedDate;
     }

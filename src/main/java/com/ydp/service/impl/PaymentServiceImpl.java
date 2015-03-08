@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ydp.dao.IPaymentTransactionDao;
 import com.ydp.domain.PaymentTransactionResource;
@@ -20,6 +21,7 @@ import com.ydp.util.IDGenerator;
  */
 
 @Service("paymentService")
+@Transactional
 public class PaymentServiceImpl implements IPaymentService {
 
     private static final Logger    LOG = LoggerFactory.getLogger(PaymentServiceImpl.class);
@@ -33,7 +35,7 @@ public class PaymentServiceImpl implements IPaymentService {
         PaymentTransactionResource paymentObj = paymentTransactionDao.getByTxnId(txnid);
         if (paymentObj == null) {
             String permaLink = generatePermaLink();
-            paymentObj = new PaymentTransactionResource(txnid, Double.valueOf(amount), productInfo, firstName, email, payerEmail, payerMobile, permaLink);
+            paymentObj = new PaymentTransactionResource(txnid, Float.valueOf(amount), productInfo, firstName, email, payerEmail, payerMobile, permaLink);
             paymentTransactionDao.save(paymentObj);
         } else {
             LOG.info("txnid already existing. Updating info");

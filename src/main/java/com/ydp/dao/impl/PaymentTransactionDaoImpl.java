@@ -40,6 +40,9 @@ public class PaymentTransactionDaoImpl implements IPaymentTransactionDao {
     public PaymentTransactionResource getByTxnId(String txnid) {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PaymentTransactionResource.class);
         criteria.add(Restrictions.eq("txnid", txnid));
+        if(criteria.list().size() <= 0) {
+            return null;
+        }
         return (PaymentTransactionResource) criteria.list().get(0);
     }
 
