@@ -42,20 +42,28 @@ public class PaymentController {
 
     @RequestMapping(value = "/msg", method = RequestMethod.GET)
     @ResponseBody
-    public String sendMessage(String messageSendType, String payerMobile, String payerEmail, String txnid, String amount, String productInfo, String firstName, String email) {
+    public String sendMessage(HttpServletRequest request, String messageSendType, String payerMobile, String payerEmail, String txnid, String amount, String productInfo, String firstName, String email) {
         LOG.info(" Transaction creation request for txnid : " + txnid);
         PaymentTransactionResource paymentResource = paymentService.saveTransactionRequest(messageSendType, payerMobile, payerEmail, txnid, amount, productInfo, firstName, email);
 
-        // TODO send mail/message here
+        String baseUrl = getBaseUrl(request.getRequestURL().toString());
         String payerEmailId = paymentResource.getPayerEmailId();
         LOG.info("Sending mail to  : " + payerEmailId);
         EmailMessageServiceImpl obj = new EmailMessageServiceImpl();
-        boolean success = obj.sendMessage(payerEmail, paymentResource.getTxnid(), paymentResource.getPermaLink(), String.valueOf(paymentResource.getAmount()));
-
+        boolean success = obj.sendMessage(baseUrl, payerEmail, paymentResource.getTxnid(), paymentResource.getPermaLink(), String.valueOf(paymentResource.getAmount()));
         String message = "Email has been sent. Please wait for payment to complete.";
         return message;
     }
     
+    private String getBaseUrl(String reqUrl) {
+        int lastIndexOf = reqUrl.lastIndexOf("/");
+        return reqUrl.substring(0, lastIndexOf);
+    }
+    
+    public static void main(String[] args) {
+        //System.out.println(getBaseUrl("http://localhost:8080/payment/msg"));
+    }
+
     @RequestMapping(value = "/testing")
     public ModelAndView testing() {
         return new ModelAndView("redirect:http://www.google.com");

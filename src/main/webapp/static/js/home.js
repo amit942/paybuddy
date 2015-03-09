@@ -18,9 +18,9 @@ $(document).ready(function() {
 		$("#display_msg").html("enter valid email");
 		$("#display_msg").show();	     
 	}else {
-
+		var txnid = Math.round(Math.random() * ( 1 + 1000000 ));
 		$.ajax({
-			url: 'payment/msg?messageSendType=email&payerMobile=&payerEmail='+input+'&txnid=123456789&amount=1234&productInfo=product1&firstName=name&email=dudani.priyanka',
+			url: 'payment/msg?messageSendType=email&payerMobile=&payerEmail='+input+'&txnid='+txnid+'&amount=1234&productInfo=product1&firstName=name&email=dudani.priyanka',
             dataType: 'json',
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
