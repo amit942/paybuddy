@@ -11,7 +11,7 @@ $(document).ready(function() {
       
      $("#ydp_send_message").click(function() {
      $("#display_msg").show();
-	 var input = $("ydp_input_text").val();
+	 var input = $("#ydp_input_text").val();
 	
 	 // assuming email only for now.
 	if(input === undefined || input == "") {
