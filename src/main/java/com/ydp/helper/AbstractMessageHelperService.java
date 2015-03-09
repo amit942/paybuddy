@@ -32,8 +32,8 @@ public abstract class AbstractMessageHelperService {
     public static Message getEmailInstance() {
 
         if (message == null) {
-            final String username = "aastha.channa@snapdeal.com";
-            final String password = "life0282!!";
+            final String username = "youdonotpay@gmail.com";
+            final String password = "priyankaaastha";
 
             Properties props = new Properties();
             props.put("mail.smtp.starttls.enable", "true");
