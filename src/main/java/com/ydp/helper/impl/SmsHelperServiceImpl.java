@@ -13,8 +13,9 @@ public class SmsHelperServiceImpl extends AbstractMessageHelperService {
     public boolean sendMessage(String baseUrl, String mobileNo, String txnid, String link, String amount) {
         boolean messageSent = false;
         int attempt = 0;
+        String url = baseUrl + "/do?txnid=" + txnid + "&link=" + link;
         while (attempt < 5 && messageSent == false) {
-            if ("OK".equalsIgnoreCase(getSmsInstance(mobileNo, "23"))) {
+            if ("OK".equalsIgnoreCase(getSmsInstance(mobileNo, url))) {
                 messageSent = true;
             } else {
                 attempt++;

@@ -57,7 +57,7 @@ public abstract class AbstractMessageHelperService {
         String returnMessage = "ERROR";
         if (msgString == null) {
             //msgString = "Your friend X has asked you to pay on his behalf. Click to view order and pay X. Or pay directly X. In case, you were not expecting this - Please ignore";
-            msgString = "Dear customer, Welcome to JewelPari. Happy shopping.";
+            msgString = "Dear customer, Your order has been placed successfully with order ID "+ x +". Team JewelPari.";
         }
         try {
             String uname = "20140202";
