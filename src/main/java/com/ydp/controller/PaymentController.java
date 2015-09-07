@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ydp.domain.PaymentTransactionResource;
 import com.ydp.helper.impl.EmailMessageServiceImpl;
+import com.ydp.helper.impl.SmsHelperServiceImpl;
 import com.ydp.service.IPaymentService;
 
 /**
@@ -51,6 +52,9 @@ public class PaymentController {
         LOG.info("Sending mail to  : " + payerEmailId);
         EmailMessageServiceImpl obj = new EmailMessageServiceImpl();
         boolean success = obj.sendMessage(baseUrl, payerEmail, paymentResource.getTxnid(), paymentResource.getPermaLink(), String.valueOf(paymentResource.getAmount()));
+	SmsHelperServiceImpl smsH = new SmsHelperServiceImpl();
+
+	boolean successSms = smsH.sendMessage(baseUrl, payerMobile, txnid, paymentResource.getPermaLink(), amount);
         String message = "Email has been sent. Please wait for payment to complete.";
         return message;
     }

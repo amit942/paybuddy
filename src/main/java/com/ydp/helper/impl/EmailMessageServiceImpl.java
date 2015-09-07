@@ -25,15 +25,16 @@ public class EmailMessageServiceImpl extends AbstractMessageHelperService {
             Message message = getEmailInstance();
             message.setFrom(new InternetAddress("PayBuddy"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-            String url = baseUrl + "/do?txnid=" + txnid + "&link=" + link;
+            String mainUrl = "http://localhost:8888/payment" + "/do?txnid=" + txnid + "&link=" + link;
+	   // String url = mainUrl.replace("http//", "");
             /*message.setText(
                     "Hi," + "\n\n Your friend has asked to pay on their behalf. \n\n Transaction id is : " + txnid + " and amount is :" + amount + " \n\n Please visit the following link for same : "
                             + "\n\n " + url);*/
-            message.setSubject("Pay123 For A Friend For Their Order on Snapdeal.com");
+            message.setSubject("Pay For A Friend For Their Order on Snapdeal.com");
             message.setContent(
                     "<p>Greetings from <span class=\"il\">Snapdeal</span>.com!</p><p>\n" + "    Your friend has asked you to pay on their behalf for Order : <span style=\"color:#00648b\">\n"
                             + "    <a href=\"http://www.snapdeal.com" + "\" target=\"_blank\">" + txnid + "</a></span>" + " . Please review the order and click <span style=\"color:#00648b\">\n "
-                            + "<a target=\"_blank\" href=\"http://" + url + "\"" + "><button>HERE</button></a></span>"
+                            + "<a target=\"_blank\" href=\"" + mainUrl + "\"" + "><button>HERE</button></a></span>"
                             + "</p><table border=\"1\" cellpadding=\"2\" cellspacing=\"2\" style=\"border-collapse:collapse;font-size:13px;border:1px solid #d2d9e7\">\n" + "    <tbody>\n"
                             + "    <tr style=\"background-color:#00648b;color:#ffffff\">\n" + "\n" + "        <td> Product Details</td>\n" + "\n" + "                <td> Seller Details</td>\n"
                             + "                <td> Ordered Quantity</td>\n" + "        <td> Price/unit (Rs.)</td>\n" + "        <td> Confirmed Quantity</td>\n" + "        <td> Sub Total</td>\n"

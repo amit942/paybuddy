@@ -1,59 +1,581 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<title>PayBuddy</title>
 <head>
-<title></title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
 
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</script><link href="https://i2.sdlcdn.com/css/omssdpts1s73/checkout.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="static/js/jquery.js"></script>
+<script>
+$(document).ready(function() {
+  $("form").submit(function (e) {
+        e.preventDefault();
+  });
 
-<link rel="stylesheet" type="text/css" href="static/css/main.css">
+$('#loader').hide();
+$('#successMsg').hide();
 
-<!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+$('.smsSubmitButton').click(function(){
+ var smsData = $('.smsInput').val();
+if(Validate(smsData)) {
+} else { return false; }
 
-<!-- Latest compiled JavaScript -->
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+ var price = $('.you-pay-amount').text();
+ var txnid = Math.floor((Math.random() * 100000000) + 1);
 
-<script src="static/js/home.js" type="text/javascript"></script>
+$('#loader').show();
+$('#successMsg').hide();
 
-<title>YDP</title>
+$.ajax({
+            url: 'http://localhost:8888/payment/msg?payerMobile=' + smsData + '&payerEmail=amit.das@snapdeal.com&amount=' + price + '&email=aastha.channa@snapdeal.com&firstName=amit&productInfo=dataCard&messageSendType=mail&txnid=' + txnid,
+            success: function (data) {
+		  $('#successMsg').show();
+		  $('.smsInput').hide();
+		  $('.smsSubmitButton').hide();
+   		  $('#loader').hide();
+            },
+            cache: false
+        });
 
+});
+$('.mailSubmitButton').click(function(){
+ var mailData = $('.mailInput').val();
+ var price = $('.you-pay-amount').text();
+ var txnid = Math.floor((Math.random() * 100000000) + 1);
+
+if(validateEmail(mailData)){
+} else {alert("Enter Correct Email"); return false;}
+
+$('#loader').show();
+$('#successMsg').hide();
+$.ajax({
+            url: 'http://localhost:8888/payment/msg?payerMobile=9717046097&payerEmail=' + mailData + '&amount=' + price + '&email=aastha.channa@snapdeal.com&firstName=amit&productInfo=dataCard&messageSendType=mail&txnid=' + txnid,
+            success: function (data) {
+		  $('#successMsg').show();
+		  $('.mailInput').hide();
+		  $('.mailSubmitButton').hide();
+		  $('#loader').hide();
+            },
+            cache: false
+        });
+
+});
+
+$('.smsOption').hide();
+$('.mailOption').hide();
+$('.shareOptions').hide();
+$('.paybuddyShareButton').click(function(){
+	$('.shareOptions').show();
+	return false;
+});
+
+$('#shareSmsImg').click(function(){
+	$('.mailOption').hide();
+	$('.smsOption').show();
+	$('#successMsg').hide();
+});
+$('#shareMailImg').click(function(){
+	$('.smsOption').hide();
+	$('.mailOption').show();
+	$('#successMsg').hide();
+});
+
+});
+</script>
+<script>
+function Validate(y)
+        {
+
+           if(isNaN(y)||y.indexOf(" ")!=-1)
+           {
+              alert("Enter numeric value")
+              return false; 
+           }
+           if (y.length>10 || y.length<10)
+           {
+                alert("enter 10 characters");
+                return false;
+           }
+           if (y.charAt(0)!="9")
+           {
+                alert("it should start with 9 ");
+                return false
+           }
+return true;
+        }
+
+function validateEmail(email) {
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return re.test(email);
+}
+</script>
+
+<style type="text/css">
+.paybuddyShareButton {
+	
+}
+.smsOption {
+	position: relative;
+	left: 34%;
+}
+#loader {
+	position: absolute;
+	right: 12%;
+	bottom: 13%;
+}
+#successMsg {
+	position: absolute;
+	right: 20%;
+}
+.mailOption {
+	position: relative;
+	left: 34%;
+}
+.shareOptions {
+	position: relative;
+	left: 34%;
+}
+#shareSmsImg {
+	position: relative;
+	left: 5%;
+}
+#shareMailImg {
+	position: relative;
+	left: 5%;
+}
+</style>
 </head>
-<body>
-
-	<h2 class="text-center">Welcome to youdonotpay.com</h2>
-
-	<!-- This div will be used to put data from different files for differnet pages -->
-	<div class="pagination-centered" id="internal-container">
-		<p>Choose payment method :</p>
-		<div id="paymentMethod">
-			<div class="radio">
-				<label><input type="radio" name="optradio">Credit
-					card</label>
-			</div>
-			<div class="radio">
-				<label><input type="radio" name="optradio">Debit
-					card</label>
-			</div>
-			<div class="radio ">
-				<label><input type="radio" id="ydp_radio_option"
-					name="optradio">You-dont-pay</label>
-			</div>
-
-			<div id="ydp_info" style="display: none">
-				<span> Please Enter payee's email address: </span> <br> <input
-					id="ydp_input_text" type="text"></input>
-				<button id="ydp_send_message" type="submit">Send message</button>
-				<div id="display_msg" style="display: none"></div>
-			</div>
+</body>
+<div>
+		<div class="smallFont comp-checkout-header">
+	<div class="header-wrapper col-xs-24">
+		<a href="http://www.snapdeal.com" title="Snapdeal.com" class="snapdeal-logo lfloat"></a>
+		<div class="checkout-trustpay rfloat">
+			<i class="lfloat"></i>
+			<div class="bold-roboto-font lfloat">TrustPay:&nbsp;</div>
+			<div class="small-font-text lfloat">100% Money Back Guarantee and 7 Days Easy Return Policy</div>
+			<div class="clear"></div>
 		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var fbLoginId = 689277371113314;
+</script>
+</div>
+<div id="checkout-wrapper" class="clearfix">
+            <div class="leftNav largeFont lfloat">
+                <div class="nav-tabs nav-visited" data-tabno="1">
+                        <div>
+                        <div class="tab-digit digit-circle lfloat">1</div>
+                        <i class="sd-icon sd-icon-checkmark tick-icon lfloat"></i>
+                        <div class="tab-margin lfloat">
+                            <div class="tab-name">Log In / Register</div>
+                            <div id="login-details" class="tab-detail smallFont" title="youremail@gmail.com">youremail@gmail.com</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nav-tabs nav-visited" data-tabno="2">
+                        <div>
+                        <div class="tab-digit digit-circle lfloat">2</div>
+                        <i class="sd-icon sd-icon-checkmark tick-icon lfloat"></i>
+                        <div class="tab-margin lfloat">
+                            <div class="tab-name">Confirm Address</div>
+                            <div id="address-details" class="tab-detail smallFont" title="pay buddy, buddy num: 4, New Delhi - 560002, Delhi, snapdeal">pay buddy, buddy num: 4, New Delhi - 560002, Delhi, snapdeal</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nav-tabs nav-visited" data-tabno="3">
+                    <div>
+                        <div class="tab-digit digit-circle lfloat">3</div>
+                        <i class="sd-icon sd-icon-checkmark tick-icon lfloat"></i>
+                        <div class="tab-margin lfloat">
+                            <div class="tab-name">Review Order</div>
+                            <div id="review-details" class="tab-detail smallFont"><div title="Karbonn Titanium S201 Dazzle 8GB Black">- Karbonn Titanium S201 Dazzle 8GB Black</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-tabs nav-selected" data-tabno="4">
+                    <div>
+                        <div class="tab-digit digit-circle lfloat">4</div>
+                        <div class="tab-margin lfloat">
+                            <div class="tab-name">Make Payment</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="checkout-cont-outer col-xs-19 rfloat pad0"> 
+                <div id="checkout-login" style="display: none;">
+                    <div class="login-wrapper clearfix">
+                            <div class="login-form col-xs-12 pad0">
+                                    <form id="customer-email-validator" novalidate="novalidate">
+                                        <div class="extraLargeFont tab-title fntBold rippleWhite">Log In / Register</div>
+                                        <div class="small-font-text">We will send order details to this email address</div>
+                                        <div class="signup-success clearfix">
+                                            <div><i class="sd-icon sd-icon-checkmark"></i></div>
+                                            <span>Please check your email to find link to reset your password</span>
+                                        </div>
+                                        <div class="medium-roboto-font mediumFont pad-top25 provide-email">You already have an account with us. Please login</div>
+                                        <input type="text" id="username" name="email" placeholder="abc@xyz.com" aria-required="true" class="valid" style="display: none;">
+                                        <div class="regular-roboto-font userdetail-outer clearfix" style="display: block;">
+                                            <div id="useremail" class="largeFont lfloat">data@gmail.com</div>
+                                            <div id="change-email" class="smallFont lfloat">Change</div>
+                                        </div>
+                                        <button id="login-continue" class="mediumFont rippleWhite" type="button" style="display: none;"><span class="drop" style="height: 156px; width: 156px; top: -45px; left: 34.5px;"></span>CONTINUE</button>
+                                        <div class="login-register medium-roboto-font" style="display: block;">
+                                            <div id="otp-block" style="display: none;">
+                                                <div>Enter OTP</div>
+                                                <input id="otp-value" type="password" name="otp-value" placeholder="Enter 4 digt OTP">
+                                                <label id="otp-error" for="otp-value" class="error" style="display: none;"></label>
+                                                <div id="resend-OTP" class="only-login">Resend OTP</div>
+
+                                                <div class="new-pwd-lbl">Enter New Password</div>
+                                                <input id="new_password" type="password" name="newPassword" autocomplete="off">
+                                                <input id="new_passwordText" name="newPasswordText" class=" no-display" autocomplete="off">
+                                                <i id="visibility-toggle-icon" class="sd-icon sd-icon-invisible"></i>
+                                                <label id="new-password-error" for="new_password" class="error" style="display: none;"></label>
+
+                                               
+
+                                               <!-- <div class="mar-top-20px">Confirm New Password</div>
+                                                <input id="new-password-repeat" type="password" name="newPasswordR" />
+                                                <label id="new-password-repeat-error" for="new-password-repeat" class="error" ></label>-->
+
+                                            </div>
+                                            <div class="non-otp-block">
+                                                <div>Enter Password</div>
+                                                <input id="w_password" type="password" name="password">
+                                                <label id="password-error" for="w_password" class="error" style="display: none;"></label>
+                                                <div id="forgot-pass" class="only-login">Forgot Password?</div>
+                                                <div class="signup mar-top-20px" style="display: none;">Confirm Password</div>
+                                                <input id="w_password-repeat" type="password" name="password" class="signup" style="display: none;">
+                                                <label id="password-repeat-error" for="w_password-repeat" class="error" style="display: none;"></label>
+                                            </div>
+                                            <button id="reset-login" class="mediumFont rippleWhite no-display" type="button" style="display: none;">RESET &amp; LOGIN</button>
+                                            <button id="login-done" class="mediumFont only-login rippleWhite" type="button">LOGIN</button>
+                                            <button id="register-done" class="mediumFont signup rippleWhite" type="button" style="display: none;">REGISTER &amp; LOGIN</button>
+                                            <div class="login-or-register"></div>
+                                               <div class="reset-or-continue" style="display: none;"></div>
+                                                <button id="without-passwrd" class="rippleWhite" type="button"><span class="drop" style="height: 270px; width: 270px; top: 342px; left: 435px;"></span>CONTINUE WITHOUT PASSWORD</button>
+                                            </div>
+                                    </form>
+                                </div>
+                                <div class="social-login smallFont col-xs-12 pad0">
+                                    <div class="social-wrapper">
+                                        <div class="light-roboto-font largeFont">Or simply login using</div>
+                                        <div id="fblogin" class="lfloat">
+                                            <i class="sd-icon sd-icon-facebook24"></i>
+                                            <p>Facebook</p>
+                                        </div>
+                                        <div id="gplogin" class="lfloat">
+                                            <i class="sd-icon sd-icon-google24"></i>
+                                            <p>Google</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                        <div class="text-divide">OR</div>
+                                    </div>
+                                    <div class="small-font-text">We never post on your behalf</div>
+                                    <div class="login-need no-display" style="display: block;">
+                                        <div class="need-title">Why you should login?</div>
+                                        <div class="need-details">Login to use SD Cash, saved  addresses &amp; saved cards.</div>
+                                    </div>
+                                    <div class="checkout-signbox-cont"></div>
+                                </div>
+                            </div>
+                    </div>
+                    <div id="checkout-shipping" style="display: none;">
+                    <h2 class="heading">Confirm Address</h2>
+                        <div id="address-form" class="no-display" style="display: block;">                       
+                            <div class="shipping-address">                            
+                                <div class="heading-container clearfix">                                
+                                    <h3 class="sub-heading pull-left">We will deliver your order here</h3>
+                                    <a href="javascript:void(0)" id="back-to-saved-address" class="sub-heading pull-right" style="display: none;"><i class="sd-icon sd-icon-previous fnt10"></i>Back To Saved Addresses</a>
+                                </div>
+                                <div id="address-form-error-box" class="no-display">
+                                    <div class="conflict-wrapper-header">
+                                        <span class="circle-error sd-icon sd-icon-error"></span>
+                                        <p></p>
+                                    </div>                                       
+                                </div>
+                                <div id="buynow-address-form" class="clearfix">
+                                    <i class="sd-icon sd-icon-high-importance warn-icon lfloat"></i>
+                                    <div class="buynow-review-data lfloat">
+                                        <p class="buynow-message">You don't have an address saved. Please enter an address.</p>
+                                    </div>
+                                </div>
+                                <div id="serviceability">
+                                        <div class="seller-changed-wrapper" style="display:none">
+                                            <span class="circle-tick sd-icon sd-icon-checkmark"></span>
+                                            <p>Seller Changed Successfully</p>
+                                        </div>
+                                        <div class="seller-address-conflict-wrapper" style="display: none;">
+                                            <div class="conflict-wrapper-header">
+                                                <span class="circle-error sd-icon sd-icon-error"></span>
+                                                <p>Sorry! Current seller of the below item(s) does not deliver to your pincode or item is out of stock</p>
+                                            </div>
+                                            <div class="item-listing"></div>
+                                        </div>
+                                    </div>
+                                <form id="shipping-address-form" novalidate="novalidate">      
+                                    <div class="customer-info">          
+                                            <div class="row">
+                                                <label class="col-xs-5 form-lbl" for="zip">Pincode <span class="require">*</span> </label> 
+                                                <input id="zip" data-address-field="pincode" type="text" value="" maxlength="6" class="col-xs-5 valid" name="zip" placeholder="Pincode" aria-required="true" aria-invalid="false">
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-xs-5 form-lbl" for="fullName">Name <span class="require">*</span> </label> 
+                                                <input type="text" maxlength="128" data-address-field="recipientName" value="" class="inputbox2 col-xs-7 valid" name="fullName" id="fullName" placeholder="Full Name" aria-required="true" aria-invalid="false">
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-xs-5 form-lbl" for="address">Address <span class="require">*</span></label>
+                                                <textarea name="address" data-address-field="addressLine1" class="inputbox2 col-xs-7 text-area valid" id="address" placeholder="Address Details" aria-required="true" aria-invalid="false"></textarea>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-xs-5 form-lbl" for="nearestLandmark">Landmark</label> 
+                                                <input maxlength="400" type="text" data-address-field="landmark" value="" class="inputbox2 col-xs-7 valid" name="nearestLandmark" id="nearestLandmark" placeholder="Landmark" aria-invalid="false">
+                                            </div>
+                                            <div class="row " style="display: block;">
+                                                <label class="col-xs-5 form-lbl" for="city">City <span class="require">*</span> </label> 
+                                                <input maxlength="48" type="text" data-address-field="city" value="" class="inputbox2 col-xs-7 valid" name="city" id="city" placeholder="City" aria-required="true" aria-invalid="false">
+                                            </div>
+                                            <div class="row " style="display: block;">
+                                                <label class="col-xs-5 form-lbl" for="state">State <span class="require">*</span></label> 
+                                                <select name="state" data-address-field="state" data-error-block="stateReq" class="col-xs-7 customized mandatory s-hidden" id="state" style="display: none;"><option value="">Select State</option><option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option><option value="Andhra Pradesh">Andhra Pradesh</option><option value="Arunachal Pradesh">Arunachal Pradesh</option><option value="Assam">Assam</option><option value="Bihar">Bihar</option><option value="Chandigarh">Chandigarh</option><option value="Chhattisgarh">Chhattisgarh</option><option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option><option value="Daman and Diu">Daman and Diu</option><option value="Delhi">Delhi</option><option value="Goa">Goa</option><option value="Gujarat">Gujarat</option><option value="Haryana">Haryana</option><option value="Himachal Pradesh">Himachal Pradesh</option><option value="Jammu and Kashmir">Jammu and Kashmir</option><option value="Jharkhand">Jharkhand</option><option value="Karnataka">Karnataka</option><option value="Kerala">Kerala</option><option value="Lakshadweep">Lakshadweep</option><option value="Madhya Pradesh">Madhya Pradesh</option><option value="Maharashtra">Maharashtra</option><option value="Manipur">Manipur</option><option value="Meghalaya">Meghalaya</option><option value="Mizoram">Mizoram</option><option value="Nagaland">Nagaland</option><option value="Orissa">Orissa</option><option value="Pondicherry">Pondicherry</option><option value="Punjab">Punjab</option><option value="Rajasthan">Rajasthan</option><option value="Sikkim">Sikkim</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Tripura">Tripura</option><option value="Uttar Pradesh">Uttar Pradesh</option><option value="Uttarakhand">Uttarakhand</option><option value="West Bengal">West Bengal</option></select><div class="styledSelect sd-icon-expand-arrow col-xs-7 customized mandatory" id="CS1" data-classes="before-hover sel" style="height: 36px; width: 240px; line-height: 34px;">Delhi</div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-xs-5 form-lbl" for="mobile">Mobile Number <span class="require">*</span> </label>
+                                                <span class="mobile-prepend">+91</span> 
+                                                <input type="text" data-address-field="recipientMobile" value="" class="inputbox2 col-xs-6 valid" maxlength="10" name="mobile" id="mobile" placeholder="10 digit mobile number" aria-required="true" aria-invalid="false">
+                                            </div>
+                                             <div class="row">
+                                                    <label class="col-xs-5"></label>
+                                                    <button id="delivery-just-continue" class="rippleWhite button-org col-xs-7" type="button"><span class="drop" style="height: 201px; width: 201px; top: -82.5px; left: -7.5px;"></span>
+                                                        <span class="button-text">CONTINUE</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <div id="confirm-address" style="display: none;">
+                            <div class="heading-container clearfix"> 
+
+                                <h3 class="sub-heading pull-left">We will deliver your order here</h3>
+                               
+                                        <h3 id="current-slides-number" class="sub-heading"></h3>
+                                  
+                                
+                            </div>
+                            <div id="buynow-address-saved" class="clearfix">
+                                <i class="sd-icon sd-icon-high-importance warn-icon lfloat"></i>
+                                <div class="buynow-review-data lfloat">
+                                    <p class="buynow-message">You do not have a default address. Please select an address to proceed.</p>
+                                </div>
+                            </div>
+                            <div id="saved-address-error-box" class="no-display" style="display: none;">
+                                <div class="conflict-wrapper-header">
+                                    <span class="circle-error sd-icon sd-icon-error"></span>
+                                    <p></p>
+                                </div>                                       
+                            </div>
+                            <div class="slider clearfix">
+                                <ul class="address-slider"></ul>
+
+                                <div class="owl-buttons">
+                                    <div id="slider-prev">
+
+                                    </div>
+                                    <div id="slider-next">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-address no-display" style="display: block;">
+                                <button class="rippleGrey button-org-trans">ADD NEW ADDRESS</button>
+                            </div>
+                           
+                                </div>  
+                    </div>
+                <div id="checkout-reviews" style="display: none;">
+                    <div class="reviews-wrapper">
+                        <div class="extraLargeFont tab-title fntBold">Review Order</div>
+                        <div class="small-font-text">Our delivery time depends on your selected delivery option</div>
+                        <div id="buynow-review" class="clearfix">
+                            <i class="sd-icon sd-icon-high-importance warn-icon lfloat"></i>
+                            <div class="buynow-review-data lfloat clearfix">
+                                <p class="buynow-address lfloat"></p>
+                                <p class="buynow-changeaddress lfloat">Change Address</p>
+                            </div>
+                            <i class="fa-close sd-icon-delete-sign buynow-close rfloat"></i>
+                        </div>
+                        <div class="updated-successfully-box" style="display:none">
+                            <span class="circle-tick sd-icon sd-icon-checkmark"></span>
+                            <p>Cart Updated Successfully</p>
+                        </div>
+                        <div id="order-reviews-error-box" class="no-display" style="display: none;">
+                            <div class="conflict-wrapper-header">
+                                <span class="circle-error sd-icon sd-icon-error"></span>
+                                <p>Sorry!</p>
+                            </div>                                       
+                        </div>
+                        <div class="reviews-outer">
+                            <div class="reviews-title smallFont clearfix">
+                                <div class="review-item lfloat">Item Details</div>
+                                <div class="review-details lfloat"></div>
+                                <div class="review-qty lfloat">Quantity</div>
+                                <div class="review-info lfloat">Delivery Options</div>
+                                <div class="review-sub rfloat">Subtotal</div>
+                            </div>
+                            <div id="reviews-data"><div class="review-cart-items clearfix" data-id="05e942-SDL128700040-681032828577"><div class="review-item lfloat pad-3px-top"><img class="review-img" alt="Item" src="https://n3.sdlcdn.com/imgs/a/z/g/130x152/Karbonn_Titanium_S201_Dazzle_Android_SDL128700040_1_f28a9_01-0b9ce.jpg"><div class="soldout-banner"><span>SOLD OUT</span></div></div><div class="review-details lfloat"><div class="review-item-name" title="Karbonn Titanium S201 Dazzle 8GB Black"><div>Karbonn Titanium S201 Dazzle 8GB Black</div></div></div><div class="review-qty lfloat pad-3px-top"><p class="qty-overlay"></p><select value="1" data-supc="SDL128700040" data-vendorcode="05e942" data-catalogid="681032828577" class="customized s-hidden" style="display: none;"><option value="1" selected="">1</option><option value="2">2</option><option value="3">3</option></select><div class="styledSelect sd-icon-expand-arrow customized" id="CS2" style="height: 30px; width: 44px; line-height: 28px;">1</div></div><div class="review-info lfloat pad-3px-top"><div class="reviews-delivery"><div class="delivery-info-radio radio radio-black medium"><label><input type="radio" class="delivery-charge-radio" name="05e942-SDL128700040-681032828577" checked="" value="normal"><span class="circle"></span><span class="check"></span>Estimated Delivery: <div>06 Sep - 10 Sep - <p class="free">Free</p></div></label></div></div></div><div class="review-sub lfloat pad-3px-top"><div class="reviews-price"> Rs 4,562</div></div><div class="review-remove-item lfloat"><i class="remove sd-icon sd-icon-delete-sign" title="Delete Item" data-catalogid="681032828577" data-supc="SDL128700040" data-vendorcode="05e942"></i></div></div></div>
+                            <div id="reviews-payment" class="clearfix">
+                                <div class="reviews-promo-gw col-xs-14">
+                                    <div class="row">
+                                        <label class="promo-not-available" style="display: none;">Promo code not applicable as cart already at best price</label>
+                                        <label class="promo-label" for="promo-value">
+                                            <span>Have a promo code?</span>
+                                            <a href="javascript:void(0)" class="promo-click">Apply</a>
+                                        </label>
+                                        <div class="promo-outer clearfix no-display" style="display: none;">
+                                            <input type="text" placeholder="Promo Code" class="lfloat" id="promo-value">
+                                            <button id="apply-promo" class="rippleWhite lfloat">APPLY</button>
+                                        </div>
+                                        <p class="promo-msg"></p>
+                                        <div class="gift-wrapper"><i class="sd-icon sd-icon-gift"></i><a href="javascript:void(0)" id="no-gift-wrap-option">Gift Wrap Not Available</a></div>
+                                    </div>
+                                </div>
+                                <div class="reviews-payment-info col-xs-8 rfloat">
+                                    <div id="reviews-payment-details"><div class="row"><span>Total:</span><span class="pull-right">Rs 4,562</span></div><div class="row"><span>Delivery Charges:</span><span class="pull-right"><p class="free">Free</p></span></div><div class="row total-pay"><span class="light-roboto-font">You Pay:</span><span class="total-amt pull-right">Rs 4,562</span></div></div>
+                                    <div class="row">
+                                        <button id="make-payment" class="rippleWhite"><span class="drop" style="height: 225px; width: 225px; top: -81.5px; left: -22.015625px;"></span>PROCEED TO PAYMENT</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="checkout-payment" style="display: block;">
+                    <div class="payment-wrapper">
+                        <div class="clearfix">
+                            <div class="lfloat">
+                                <div class="extraLargeFont tab-title fntBold">Make Payment</div>
+                                <div class="small-font-text">We have a host of payment options to select from</div>
+                            </div>
+                            <div class="rfloat">
+
+                            </div>
+                        </div>
+                        <div class="changed-successfully-box" style="display: none;">
+                            <span class="circle-tick sd-icon sd-icon-checkmark"></span>
+                            <p>Seller Changed Successfully</p>
+                        </div>
+                         <div class="external-error-box no-display" style="display: none;">
+                            <div class="conflict-wrapper-header">
+                                <span class="circle-error sd-icon sd-icon-error"></span>
+                                <p>Sorry! </p>
+                            </div>
+                            <div class="payment-item-listing"></div>
+                        </div>
+                        <div class="external-error-box-no-list no-display">
+                            <div class="conflict-wrapper-header">
+                                <span class="circle-error sd-icon sd-icon-error"></span>
+                                <p>Sorry!</p>
+                            </div>                                       
+                        </div>
+                        <div class="bank-promotions" style="display: none;">
+                            <span class="bank-promos-label">Apply Bank Offer</span>
+                            <ul id="bank-promos-slider"></ul>
+                            <div class="bp-owl-buttons">
+                                <div id="bp-slider-prev">
+
+                                </div>
+                                <div id="bp-slider-next">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-details-outer clearfix">
+                            <div class="payment-nav lfloat col-xs-5 pad0" style="height: 252px;"><div class="payment-mode" data-paymentmode="cc"><span>Credit Card</span><div class="arrow-right"></div></div><div class="payment-mode" data-paymentmode="dc"><span>Debit Card</span><div class="arrow-right"></div></div><div class="payment-mode" data-paymentmode="nb"><span>Net Banking</span><div class="arrow-right"></div></div><div class="payment-mode" data-paymentmode="cd"><span>Cash On Delivery</span><div class="arrow-right"></div></div><div class="payment-mode" data-paymentmode="em"><span>Credit Card EMI</span><div class="arrow-right"></div></div><div class="payment-mode" data-paymentmode="gv"><span>e-Gift Voucher</span><div class="arrow-right"></div></div>
+<div class="payment-mode payment-selected" data-paymentmode="cd"><span>Pay Buddy</span>
+</div></div>
+                            <div class="payment-content lfloat col-xs-19 pad0">
+                                <div>
+                                	<div class="subpayment-success-header text-right no-display" style="display: none;"></div>
+                                
+                                    <div class="payment-details-header clearfix">
+                                        <div class="payment-heading lfloat">Let your buddy pay for you</div>
+                                        <div class="payment-total rfloat">
+                                            <div class="payment-amount">
+                                                <label class="you-pay">Your Buddy Pay:&nbsp; Rs </label>
+                                                <label class="you-pay-amount">4562</label>
+                                            </div>
+                                            <div class="price-changed rfloat no-display" style="display: none;">
+                                                <span>Price Changed </span>
+                                                <span class="price-changed-help" data-changedprice="Price changed due to change of seller of one of the items in your cart. Previous seller is out of stock or cannot deliver to your pincode."> [ ? ] </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <form id="payment-form">
+                                        <div class="informational-box no-display" style="display: none;">
+                                            <ul></ul>
+                                        </div>
+                                        <div class="internal-error-box no-display" style="display: none;">
+                                            <div class="conflict-wrapper-header">
+                                                <span class="circle-error sd-icon sd-icon-error"></span>
+                                                <p>Sorry!</p>
+                                            </div>                                       
+                                        </div>
+                                        <div class="payment-internal-list-error-box no-display" style="display: none;">
+                                            <div class="conflict-wrapper-header">
+                                                <span class="circle-error sd-icon sd-icon-error"></span>
+                                                <p></p>
+                                            </div>
+                                            <div class="payment-internal-item-listing"></div>
+                                        </div>
+                                        <div class="paymentSubtypesOptions clearfix" style="display: none;"></div>
+                                    </form>
+                                    
+
+                                    <div class="payment-subtype-custom"><div class="cod-text-msg mediumFont">Shop till you drop, let your buddy pay for what you got</div></div>
+                                    <div id="make-payment-button" class="paybuddyShareButton" style="display: block; text-decoration:none;color:inherit;"><a href="http://localhost/web/payBuddy/">Generate Url</a>
+
+</div>
+<div class="shareOptions">
+Choose Sharing Option <br /><br /><img src="static/images/Messages-48.png" id="shareSmsImg"/>&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="static/images/Android-Gmail-48.png" id="shareMailImg" />
+</div>
+<br />
+<div id="successMsg">Successfully Shared PayBuddy Url!!</div>
+<div class="smsOption">
+<form>
+<input type="tel" name="smsInput" class="smsInput">
+&nbsp;&nbsp;<button class="smsSubmitButton">SMS</button>
+</form>
+</div>
+<div class="mailOption">
+<form>
+<input type="mail" name="mailInput" class="mailInput">
+&nbsp;&nbsp;<button class="mailSubmitButton">Mail</button>
+</form>
+</div>
+<img src="static/images/ajax-loader.gif" width="20px" height="20px" id="loader"/>
+                                    <div class="sd-tndc">
+                                        <span>By placing the order, I have read and agreed to snapdeal.com &nbsp;</span> 
+                                        <a href="https://www.snapdeal.com/info/termsOfUse" target="_blank">Terms of Use</a>
+                                        <span>&nbsp;|&nbsp;</span>
+                                        <a href="https://www.snapdeal.com/info/termsOfSale" target="_blank">Terms of Sale</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pgRedirectFormDiv" style="display: none;">
+                        <form id="completeOrderForm"></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 </body>
 </html>
