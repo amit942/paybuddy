@@ -25,10 +25,4 @@ public class SmsHelperServiceImpl extends AbstractMessageHelperService {
         LOG.info("Message sent status " + messageSent);
         return messageSent; 
     }
-
-    public static void main(String[] args) {
-        SmsHelperServiceImpl obj = new SmsHelperServiceImpl();
-        obj.sendMessage("localhost:8080", "9582392133", "txn1", "permalink1", "100");
-    }
-
 }
