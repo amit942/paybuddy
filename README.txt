@@ -20,6 +20,6 @@ OR
 =======================================
 YOU DON'T PAY team can be reached at :
 
-Email Ids - priyanka.dudani@snapdeal.com , channa.aastha@gmail.com
+Email Ids - channa.aastha@gmail.com
 
 Copyright 2015-2020. All rights reserved.
